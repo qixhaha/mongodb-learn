@@ -1,0 +1,2 @@
+--exec babel-node 表示的是同时执行 对于node的解析 使node和babel同时进行
+babel-preset-2015 支持es6转换成es5的语法
