@@ -7,6 +7,7 @@ import session from 'koa-generic-session'
 import Redis from 'koa-redis';
 import dbConfig from './dbs/config'
 import passport from './interface/utils/passport'
+import users from './interface/users'
 // import 
 const app = new Koa()
 app.keys = ['mt','keyskeys'];
@@ -43,7 +44,7 @@ async function start () {
     const builder = new Builder(nuxt)
     await builder.build()
   }
-
+  app.use(users.routes()).use(users.allowedMethods())
   app.use((ctx) => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling

@@ -9,7 +9,7 @@ import axios from './utils/axios'
 let router = new Router({
     prefix:'/users'
 })
-let store = new Redis().client
+let Store = new Redis().client
 
 router.post('/signup',async(ctx)=>{
     const {username,password,email,code} = ctx.request.body;
@@ -111,6 +111,7 @@ router.post('/signup',async(ctx,next)=>{
 
 // 获取邮箱验证码
 router.post('/verify',async (ctx,next)=>{
+    console.log('授权码dfdsfdsfddsfdsf',Email.smtp.pass)
     let username = ctx.request.body.username;
     const saveExpire = await Store.hget(`nodemail:${username}`,'expire');
     if(saveExpire && new Date().getTime() - saveExpire < 0){
@@ -123,8 +124,8 @@ router.post('/verify',async (ctx,next)=>{
     let transporter = nodeMailer.createTransport({
         service:'qq',
         auth:{
-            user:Email.smtp,user,
-            pass:Email.smtp.pass
+            user:Email.smtp.user(),
+            pass:Email.smtp.pass()
         }
     })
     let ko = {
@@ -134,7 +135,7 @@ router.post('/verify',async (ctx,next)=>{
         user:ctx.request.body.username
     }
     let mailOptions = {
-        from:`认证邮箱<${Email.smtp.user}>`,
+        from:`认证邮箱<${Email.smtp.user()}>`,
         to:ko.email,
         subject:'<綦旭发送的验证为>',
         html:`您在《慕课网高仿美团网全栈实战》课程中注册，您的邀请码是${ko.code}`
@@ -143,7 +144,7 @@ router.post('/verify',async (ctx,next)=>{
         if(error){
             return console.log(error)
         }else{
-            Store.hset(`nodemail:${ko.user}`,'code',ko.code,'expire',ko.expire,'email',ko.email)
+            Store.hmset(`nodemail:${ko.user}`,'code',ko.code,'expire',ko.expire,'email',ko.email)
         }
     })
     ctx.body = {

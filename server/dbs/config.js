@@ -2,35 +2,35 @@
 export default{
     dbs:'mongodb://127.0.0.1:27017/student',
     redis:{
-        get host(){
+        host(){
             return '127.0.0.1'
         },
-        get port(){
+        port(){
             return 6379;
         }
     },
     // 邮箱服务
     smtp:{
-        get host(){
+        host(){
             return 'smtp.qq.com'
         },
         // 发件人邮箱
-        get user(){
+        user(){
             return '2432448798@qq.com'
         },
-        get pass(){
-            return 'emejrbhubszgdjab'
+        pass(){
+            return 'lgriwoxtbxctebih'
         },
-        get code(){
-            return ()=>{
+        code(){
+            // return ()=>{
                 return Math.random().toString(16).slice(2,6).toUpperCase()
-              }
+            //   }
         },
-        get expires(){
+       expire(){
             // 过期时间1分钟
-            return ()=>{
+            // return ()=>{
                 return new Date().getTime()+1000*60
-            }
+            // }
         }
     }
 
