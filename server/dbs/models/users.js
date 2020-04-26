@@ -1,19 +1,21 @@
-// 定义用户模型
+/**
+ * @description 用户模型
+ */
 import mongoose from 'mongoose'
-const Schema = mongoose.Schema;
+const  Schema = mongoose.Schema
 const UserSchema = new Schema({
-	username:{
-		tyep:String,
-		unique:true,
-		required:true
-	},
-	password:{
-		type:String,
-		required:true
-	},
-	email:{
-		type:String,
-		required:true
-	}
+    username:{
+        type:String,
+        unique:true,
+        require:true
+    },
+    password:{
+        type:String,
+        require:true
+    },
+    email:{
+        type:String,
+        require:true
+    }
 })
 export default mongoose.model('User',UserSchema)
